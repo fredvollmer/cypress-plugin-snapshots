@@ -7,13 +7,13 @@ function snapshotTitleIsUsed(snapshotTitle, isImage = false) {
   return (isImage ? SNAPSHOT_TITLES_IMAGE : SNAPSHOT_TITLES_TEXT).has(snapshotTitle);
 }
 
-function getSnapshotTitle(test, snapshotName, customName, customSeparator, isImage = false) {
+function getSnapshotTitle(test, snapshotName, customName, customSeparator, isImage = false, allowDuplicates = false) {
   const name = customName || getTestTitle(test);
   const separator = customSeparator || '|';
 
   const snapshotTitle = `${name} ${separator} ${snapshotName}`;
 
-  if (snapshotTitleIsUsed(snapshotTitle, isImage)) {
+  if (!allowDuplicates && snapshotTitleIsUsed(snapshotTitle, isImage)) {
     throw new Error(`duplicate snapshot name '${snapshotName}' in ${name}`);
   }
 

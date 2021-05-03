@@ -27,6 +27,7 @@ function getTaskData({
     options,
     customName,
     customSeparator,
+    allowDuplicateNames,
     subject: testSubject
   } = {}) {
   const subjectIsImage = isImage(commandName);
@@ -34,7 +35,7 @@ function getTaskData({
   const testTitle = getTestTitle(test);
   const spec = getSpec();
   const testFile = spec.absolute;
-  const snapshotTitle = getSnapshotTitle(test, snapshotName, customName, customSeparator, subjectIsImage);
+  const snapshotTitle = getSnapshotTitle(test, snapshotName, customName, customSeparator, subjectIsImage, allowDuplicateNames);
   const subject = subjectIsImage ? testSubject : getSubject(testSubject);
   const dataType = getDataType({commandName, subject: testSubject});
 
