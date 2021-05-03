@@ -21,8 +21,9 @@ function getDataType({commandName, subject}) {
   return isHtml(subject) ? TYPE_HTML : TYPE_JSON;
 }
 
-async function getTaskData({
+function getTaskData({
     commandName,
+    snapshotName,
     options,
     customName,
     customSeparator,
@@ -31,9 +32,9 @@ async function getTaskData({
   const subjectIsImage = isImage(commandName);
   const test = getTestForTask();
   const testTitle = getTestTitle(test);
-  const spec = await getSpec();
+  const spec = getSpec();
   const testFile = spec.absolute;
-  const snapshotTitle = getSnapshotTitle(test, customName, customSeparator, subjectIsImage);
+  const snapshotTitle = getSnapshotTitle(test, snapshotName, customName, customSeparator, subjectIsImage);
   const subject = subjectIsImage ? testSubject : getSubject(testSubject);
   const dataType = getDataType({commandName, subject: testSubject});
 

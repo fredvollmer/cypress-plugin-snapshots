@@ -19,13 +19,14 @@ function afterScreenshot(taskData) {
   };
 }
 
-async function toMatchImageSnapshot(subject, commandOptions) {
+async function toMatchImageSnapshot(subject, snapshotName, commandOptions) {
   const options = getImageConfig(commandOptions);
   const customName = getCustomName(commandOptions);
   const customSeparator = getCustomSeparator(commandOptions);
 
   const taskData = await getTaskData({
     commandName,
+    snapshotName,
     options,
     customName,
     customSeparator,

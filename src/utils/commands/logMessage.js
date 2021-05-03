@@ -64,4 +64,4 @@ function logMessage(result) {
   return subject;
 }
 
-module.exports = logMessage;
+module.exports = {logMessage};

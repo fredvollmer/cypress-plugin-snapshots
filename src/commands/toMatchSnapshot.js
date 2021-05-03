@@ -6,9 +6,10 @@ const logMessage = require('../utils/commands/logMessage');
 const { NO_LOG } = require('../constants');
 const { COMMAND_MATCH_SNAPSHOT: commandName } = require('./commandNames');
 
-function toMatchSnapshot(subject, options) {
+function toMatchSnapshot(subject, snapshotName, options) {
   return getTaskData({
       commandName,
+      snapshotName,
       options,
       subject,
     }).then(taskData => cy.task(

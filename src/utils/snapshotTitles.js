@@ -1,28 +1,24 @@
 const getTestTitle = require('./getTestTitle');
 
-const SNAPSHOTS_TEXT = {}
-const SNAPSHOTS_IMAGE = {};
-
-const SNAPSHOT_TITLES_TEXT = [];
-const SNAPSHOT_TITLES_IMAGE = [];
+const SNAPSHOT_TITLES_TEXT = new Set();
+const SNAPSHOT_TITLES_IMAGE = new Set();
 
 function snapshotTitleIsUsed(snapshotTitle, isImage = false) {
-  return (isImage ? SNAPSHOT_TITLES_IMAGE : SNAPSHOT_TITLES_TEXT).indexOf(snapshotTitle) !== -1;
+  return (isImage ? SNAPSHOT_TITLES_IMAGE : SNAPSHOT_TITLES_TEXT).has(snapshotTitle);
 }
 
-function getSnapshotTitle(test, customName, customSeparator, isImage = false) {
+function getSnapshotTitle(test, snapshotName, customName, customSeparator, isImage = false) {
   const name = customName || getTestTitle(test);
-  const separator = customSeparator || ' #';
-  const snapshots = isImage ? SNAPSHOTS_IMAGE : SNAPSHOTS_TEXT;
+  const separator = customSeparator || '|';
 
-  if (snapshots[name] !== undefined) {
-    snapshots[name] += 1;
-  } else {
-    snapshots[name] = 0;
+  const snapshotTitle = `${name} ${separator} ${snapshotName}`;
+
+  if (snapshotTitleIsUsed(snapshotTitle, isImage)) {
+    throw new Error(`duplicate snapshot name '${snapshotName}' in ${name}`);
   }
 
-  const snapshotTitle = `${name}${separator}${snapshots[name]}`;
-  (isImage ? SNAPSHOT_TITLES_IMAGE : SNAPSHOT_TITLES_TEXT).push(snapshotTitle);
+  (isImage ? SNAPSHOT_TITLES_IMAGE : SNAPSHOT_TITLES_TEXT).add(snapshotTitle);
+
   return snapshotTitle;
 }
 
