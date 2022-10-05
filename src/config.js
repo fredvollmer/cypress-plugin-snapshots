@@ -1,5 +1,6 @@
 const randtoken = require('rand-token');
 const { merge, cloneDeep, clone } = require('lodash');
+const PluginOrganizeAttributes = require('prettier-plugin-organize-attributes');
 const { TYPE_JSON } = require('./dataTypes');
 
 function createToken() {
@@ -38,8 +39,11 @@ const DEFAULT_CONFIG = Object.freeze({
   prettierConfig: {
     html: {
       parser: 'html',
+      plugins: [PluginOrganizeAttributes],
+      pluginSearchDirs: false,
       tabWidth: 2,
-      endOfLine: 'lf'
+      endOfLine: 'lf',
+      attributeSort: 'ASC',
     },
   },
   screenshotConfig: clone(DEFAULT_SCREENSHOT_CONFIG),

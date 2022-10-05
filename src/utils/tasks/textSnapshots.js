@@ -31,7 +31,8 @@ function subjectToSnapshot(subject, dataType = TYPE_JSON, config = {}) {
 
       result = prettier.format(result.trim(), prettierConfig).trim();
     } catch(err) {
-      throw new Error(`Cannot format subject: ${result}`);
+      err.message = `Cannot format subject, error: (${err.message}) subject: ${result} `;
+      throw err;
     }
   } else if(dataType === TYPE_JSON && config.formatJson) {
     result = formatJson(result);
